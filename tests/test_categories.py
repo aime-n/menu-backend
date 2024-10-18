@@ -7,24 +7,6 @@ import os
 from datetime import datetime
 from loguru import logger
 
-# # Override the get_session dependency to use the test database
-# def get_test_session():
-#     with Session(engine) as session:
-#         yield session
-
-# # Apply the override in the FastAPI app
-# app.dependency_overrides[get_session] = get_test_session
-
-# # Create the database and tables
-# @pytest.fixture(scope="module", autouse=True)
-# def setup_database():
-#     SQLModel.metadata.create_all(engine)
-#     yield
-#     SQLModel.metadata.drop_all(engine)
-
-# # Initialize TestClient for FastAPI
-# client = TestClient(app)
-
 def test_create_category(client):
     # Test creating a category
     response = client.post(
