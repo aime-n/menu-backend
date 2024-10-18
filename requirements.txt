@@ -1,0 +1,11 @@
+sqlmodel
+typing-extensions
+jiwer
+gradio
+fastapi
+sqlalchemy
+loguru
+pytest
+httpx
+python-dotenv
+psycopg2
