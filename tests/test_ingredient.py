@@ -7,19 +7,18 @@ def test_create_ingredient(client: TestClient):
     response = client.post(
         "/ingredients/",
         json={
-            "openfood_facts_id": "12345",
-            "openfoodfacts_content": None,
+            "openfoodfacts_id": "1234",
             "name": "Tomato",
             "category_id": None,
-            "created_at": datetime.now().isoformat()
+            "created_at": datetime.now().isoformat(),
+            "openfoodfacts_content": {},
+            "updated_at": datetime.now().isoformat()
             }
-
     )
     assert response.status_code == 201
     data = response.json()
     assert data["name"] == "Tomato"
-    assert data["standard_name"] == "Solanum lycopersicum"
-    assert data["synonyms"] == ["Red Fruit", "Tomato Plant"]
+    assert data["openfoodfacts_id"] == "1234"
     assert "ingredient_id" in data
 
 # Test getting an ingredient by ID
@@ -28,12 +27,13 @@ def test_get_ingredient(client: TestClient):
     create_response = client.post(
         "/ingredients/",
         json={
-            "openfood_facts_id": "54321",
+            "openfoodfacts_id": "1234",
             "name": "Cucumber",
-            "standard_name": "Cucumis sativus",
             "category_id": None,
-            "synonyms": ["Green Cucumber", "Salad Cucumber"]
-        }
+            "created_at": datetime.now().isoformat(),
+            "openfoodfacts_content": {},
+            "updated_at": datetime.now().isoformat()
+            }
     )
     assert create_response.status_code == 201
     created_ingredient = create_response.json()
@@ -43,7 +43,6 @@ def test_get_ingredient(client: TestClient):
     assert response.status_code == 200
     data = response.json()
     assert data["name"] == "Cucumber"
-    assert data["standard_name"] == "Cucumis sativus"
 
 # Test retrieving a list of ingredients
 def test_get_ingredients(client: TestClient):
@@ -59,12 +58,13 @@ def test_update_ingredient(client: TestClient):
     create_response = client.post(
         "/ingredients/",
         json={
-            "openfood_facts_id": "67890",
-            "name": "Pepper",
-            "standard_name": "Capsicum annuum",
+            "openfoodfacts_id": "1234",
+            "name": "Spicy",
             "category_id": None,
-            "synonyms": ["Bell Pepper", "Capsicum"]
-        }
+            "created_at": datetime.now().isoformat(),
+            "openfoodfacts_content": {},
+            "updated_at": datetime.now().isoformat()
+            }
     )
     assert create_response.status_code == 201
     created_ingredient = create_response.json()
@@ -73,17 +73,16 @@ def test_update_ingredient(client: TestClient):
     update_response = client.put(
         f"/ingredients/{created_ingredient['ingredient_id']}",
         json={
+            "openfoodfacts_id": "321",
             "name": "Spicy Pepper",
-            "openfood_facts_id": "67890",
-            "standard_name": "Capsicum annuum",
-            "category_id": None,
-            "synonyms": ["Hot Pepper", "Spicy Capsicum"]
-        }
+            "openfoodfacts_content": {},
+            "updated_at": "2024-10-18T15:50:13.114Z",
+            "category_id": None
+            }
     )
     assert update_response.status_code == 200
     updated_data = update_response.json()
     assert updated_data["name"] == "Spicy Pepper"
-    assert updated_data["synonyms"] == ["Hot Pepper", "Spicy Capsicum"]
 
 # Test deleting an ingredient
 def test_delete_ingredient(client: TestClient):
@@ -91,12 +90,13 @@ def test_delete_ingredient(client: TestClient):
     create_response = client.post(
         "/ingredients/",
         json={
-            "openfood_facts_id": "98765",
-            "name": "Carrot",
-            "standard_name": "Daucus carota",
+            "openfoodfacts_id": "1234",
+            "name": "Spicy",
             "category_id": None,
-            "synonyms": ["Orange Root", "Carrot Root"]
-        }
+            "created_at": datetime.now().isoformat(),
+            "openfoodfacts_content": {},
+            "updated_at": datetime.now().isoformat()
+            }
     )
     assert create_response.status_code == 201
     created_ingredient = create_response.json()

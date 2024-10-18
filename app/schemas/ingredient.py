@@ -7,15 +7,15 @@ from pydantic import BaseModel, Field
 class IngredientBase(SQLModel):
     # ingredient_id: Optional[int] = Field(default=None)
     openfoodfacts_id: Optional[str] = Field(max_length=50)
-    openfoodfacts_content: Optional[dict]
     name: str = Field(max_length=100)
-    category_id: Optional[int] 
-    created_at: Optional[datetime] 
 
 
 class IngredientCreate(IngredientBase):
     """Schema for creating a new Ingredient."""
-    updated_at: Optional[datetime] = None
+    category_id: Optional[int] 
+    created_at: Optional[datetime] 
+    openfoodfacts_content: Optional[dict]
+    updated_at: Optional[datetime]
 
 
 class IngredientRead(IngredientBase):
@@ -24,10 +24,8 @@ class IngredientRead(IngredientBase):
     created_at: datetime
     updated_at: datetime
 
-class IngredientUpdate(SQLModel):
+class IngredientUpdate(IngredientBase):
     """Schema for updating an Ingredient."""
-    openfoodfacts_id: Optional[str] = None
-    name: Optional[str] = None
-    standard_name: Optional[str] = None
-    updated_at: datetime
+    openfoodfacts_content: Optional[dict] = None
     category_id: Optional[int] = None
+    updated_at: datetime = None

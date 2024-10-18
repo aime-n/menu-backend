@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlmodel import Field, Relationship, SQLModel
 from sqlalchemy.dialects.postgresql import JSONB
 
+
 class Ingredient(SQLModel, table=True):
     __tablename__ = "ingredients"
     ingredient_id: Optional[int] = Field(default=None, primary_key=True)

@@ -38,7 +38,7 @@ def update_category(session: Session, category_id: int, category_data: CategoryU
     if not category:
         return None
     # Update the fields that have been provided
-    ingredient_data_dict = category_data.dict(exclude_unset=True)
+    ingredient_data_dict = category_data.model_dump(exclude_unset=True)
     for key, value in ingredient_data_dict.items():
         setattr(category, key, value)
     session.add(category)
