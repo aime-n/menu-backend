@@ -5,13 +5,12 @@ from datetime import datetime, timezone
 from pydantic import BaseModel, Field
 
 class IngredientBase(SQLModel):
-    ingredient_id: Optional[int] = Field(default=None)
-    openfoodfacts_id: str = Field(max_length=50)
+    # ingredient_id: Optional[int] = Field(default=None)
+    openfood_facts_id: Optional[str] = Field(max_length=50)
+    openfoodfacts_content: Optional[dict]
     name: str = Field(max_length=100)
-    standard_name: str = Field(max_length=100)
-    category_id: Optional[int] = Field(default=None)
-    created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(timezone.utc))
+    category_id: Optional[int] 
+    created_at: Optional[datetime] 
 
 
 class IngredientCreate(IngredientBase):
@@ -29,4 +28,5 @@ class IngredientUpdate(SQLModel):
     openfoodfacts_id: Optional[str] = None
     name: Optional[str] = None
     standard_name: Optional[str] = None
+    updated_at: datetime
     category_id: Optional[int] = None

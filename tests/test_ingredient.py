@@ -1,78 +1,109 @@
-# import pytest
-# from fastapi.testclient import TestClient
-# from sqlmodel import Session, create_engine, SQLModel
-# from app.main import app
-# from app.database import get_session, engine
-# import os
-# from datetime import datetime
-# from loguru import logger
+import pytest
+from datetime import datetime
+from fastapi.testclient import TestClient
 
-# # Override the get_session dependency to use the test database
-# def get_test_session():
-#     with Session(engine) as session:
-#         yield session
+# Test creating a new ingredient
+def test_create_ingredient(client: TestClient):
+    response = client.post(
+        "/ingredients/",
+        json={
+            "openfood_facts_id": "12345",
+            "openfoodfacts_content": null,
+            "name": "Tomato",
+            "category_id": None,
+            "created_at": datetime.now()}
 
-# # Apply the override in the FastAPI app
-# app.dependency_overrides[get_session] = get_test_session
+    )
+    assert response.status_code == 201
+    data = response.json()
+    assert data["name"] == "Tomato"
+    assert data["standard_name"] == "Solanum lycopersicum"
+    assert data["synonyms"] == ["Red Fruit", "Tomato Plant"]
+    assert "ingredient_id" in data
 
-# # Create the database and tables
-# @pytest.fixture(scope="module", autouse=True)
-# def setup_database():
-#     SQLModel.metadata.create_all(engine)
-#     yield
-#     SQLModel.metadata.drop_all(engine)
+# Test getting an ingredient by ID
+def test_get_ingredient(client: TestClient):
+    # First, create an ingredient to test retrieval
+    create_response = client.post(
+        "/ingredients/",
+        json={
+            "openfood_facts_id": "54321",
+            "name": "Cucumber",
+            "standard_name": "Cucumis sativus",
+            "category_id": None,
+            "synonyms": ["Green Cucumber", "Salad Cucumber"]
+        }
+    )
+    assert create_response.status_code == 201
+    created_ingredient = create_response.json()
 
-# # Initialize TestClient for FastAPI
-# client = TestClient(app)
+    # Now retrieve the ingredient by its ID
+    response = client.get(f"/ingredients/{created_ingredient['ingredient_id']}")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["name"] == "Cucumber"
+    assert data["standard_name"] == "Cucumis sativus"
 
-# # @pytest.mark.asyncio
-# # async def test_create_ingredient(client: AsyncClient):
-# #     logger.info("Starting test: test_create_ingredient")
-# #     ingredient_data = {
-# #         "openfoodfacts_id": "12345",
-# #         "name": "Test Ingredient",
-# #         "standard_name": "Test Standard Name",
-# #         "category_id": None,
-# #         "synonyms": ["test_synonym"]
-# #     }
-    
-# #     response = await client.post("/ingredients/", json=ingredient_data)
-# #     logger.debug(f"Response status code: {response.status_code}, Response data: {response.json()}")
-    
-# #     assert response.status_code == 201
-# #     data = response.json()
-# #     assert data["name"] == "Test Ingredient"
-# #     assert data["standard_name"] == "Test Standard Name"
-# #     logger.info("Test test_create_ingredient passed successfully.")
+# Test retrieving a list of ingredients
+def test_get_ingredients(client: TestClient):
+    response = client.get("/ingredients/")
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data, list)  # Should return a list
+    assert len(data) > 0  # Ensure there is at least one item
 
-# # @pytest.mark.asyncio
-# # async def test_read_ingredient(client: AsyncClient):
-# #     logger.info("Starting test: test_read_ingredient")
-# #     response = await client.get("/ingredients/1")
-# #     logger.debug(f"Response status code: {response.status_code}, Response data: {response.json()}")
-    
-# #     assert response.status_code == 200
-# #     data = response.json()
-# #     assert data["name"] == "Test Ingredient"
-# #     logger.info("Test test_read_ingredient passed successfully.")
+# Test updating an ingredient
+def test_update_ingredient(client: TestClient):
+    # First, create an ingredient to update
+    create_response = client.post(
+        "/ingredients/",
+        json={
+            "openfood_facts_id": "67890",
+            "name": "Pepper",
+            "standard_name": "Capsicum annuum",
+            "category_id": None,
+            "synonyms": ["Bell Pepper", "Capsicum"]
+        }
+    )
+    assert create_response.status_code == 201
+    created_ingredient = create_response.json()
 
-# # @pytest.mark.asyncio
-# # async def test_update_ingredient(client: AsyncClient):
-# #     logger.info("Starting test: test_update_ingredient")
-# #     update_data = {"name": "Updated Ingredient Name"}
-# #     response = await client.put("/ingredients/1", json=update_data)
-# #     logger.debug(f"Response status code: {response.status_code}, Response data: {response.json()}")
-    
-# #     assert response.status_code == 200
-# #     data = response.json()
-# #     assert data["name"] == "Updated Ingredient Name"
-# #     logger.info("Test test_update_ingredient passed successfully.")
+    # Update the ingredient's name
+    update_response = client.put(
+        f"/ingredients/{created_ingredient['ingredient_id']}",
+        json={
+            "name": "Spicy Pepper",
+            "openfood_facts_id": "67890",
+            "standard_name": "Capsicum annuum",
+            "category_id": None,
+            "synonyms": ["Hot Pepper", "Spicy Capsicum"]
+        }
+    )
+    assert update_response.status_code == 200
+    updated_data = update_response.json()
+    assert updated_data["name"] == "Spicy Pepper"
+    assert updated_data["synonyms"] == ["Hot Pepper", "Spicy Capsicum"]
 
-# # @pytest.mark.asyncio
-# # async def test_delete_ingredient(client: AsyncClient):
-# #     logger.info("Starting test: test_delete_ingredient")
-# #     response = await client.delete("/ingredients/1")
-# #     logger.debug(f"Response status code: {response.status_code}")
-    
-# #     assert response.status_code == 204
-# #     logger.info("Test test_delete_ingredient passed successfully.")
+# Test deleting an ingredient
+def test_delete_ingredient(client: TestClient):
+    # First, create an ingredient to delete
+    create_response = client.post(
+        "/ingredients/",
+        json={
+            "openfood_facts_id": "98765",
+            "name": "Carrot",
+            "standard_name": "Daucus carota",
+            "category_id": None,
+            "synonyms": ["Orange Root", "Carrot Root"]
+        }
+    )
+    assert create_response.status_code == 201
+    created_ingredient = create_response.json()
+
+    # Delete the ingredient
+    delete_response = client.delete(f"/ingredients/{created_ingredient['ingredient_id']}")
+    assert delete_response.status_code == 204
+
+    # Verify the ingredient no longer exists
+    get_response = client.get(f"/ingredients/{created_ingredient['ingredient_id']}")
+    assert get_response.status_code == 404
