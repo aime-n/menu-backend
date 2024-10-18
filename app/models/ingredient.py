@@ -18,3 +18,5 @@ class Ingredient(SQLModel, table=True):
     # Relationship
     category: Optional["Category"] = Relationship(back_populates="ingredients")
     recipe_associations: List["RecipeIngredient"] = Relationship(back_populates="ingredient")
+    user_associations: List["UserInventory"] = Relationship(back_populates="ingredient")
+    synonyms_list: List["IngredientSynonym"] = Relationship(back_populates="ingredient")

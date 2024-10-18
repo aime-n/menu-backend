@@ -1,25 +1,19 @@
-# from __future__ import annotations
-# from typing import Optional, List, TYPE_CHECKING
-# from datetime import datetime, timezone
-# from sqlmodel import Field, SQLModel, Relationship
-# 
 
-# if TYPE_CHECKING:
-#     from .user import User
-#     from .folder_recipe import FolderRecipe
+from typing import Optional, List
+from datetime import datetime, timezone
+from sqlmodel import Field, SQLModel, Relationship
 
-# class Folder(SQLModel, table=True):
-#     """SQLModel for the folders table."""
-#     __tablename__ = "folders"
-#     __table_args__ = {"schema": "recipes_db"}
+class Folder(SQLModel, table=True):
+    """SQLModel for the folders table."""
+    __tablename__ = "folders"
 
-#     folder_id: Optional[int] = Field(default=None, primary_key=True)
-#     user_id: int = Field(foreign_key="recipes_db.users.user_id")
-#     name: str
-#     description: Optional[str] = None
-#     created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(timezone.utc))
-#     updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(timezone.utc))
+    folder_id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="users.user_id")
+    name: str
+    description: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.now)    
+    updated_at: Optional[datetime] = Field(default_factory=datetime.now)    
 
-#     # Relationships
-#     user: Optional["User"]] = Relationship(back_populates="folders")
-#     recipes: List["FolderRecipe"]] = Relationship(back_populates="folder")
+    # Relationships
+    user: Optional["User"] = Relationship(back_populates="folders")
+    recipes: List["FolderRecipe"] = Relationship(back_populates="folder")

@@ -8,11 +8,9 @@ class RecipeIngredient(SQLModel, table=True):
     __tablename__ = "recipe_ingredients"
 
     recipe_id: Optional[int] = Field(
-        default=None, foreign_key="recipes.recipe_id", primary_key=True
-    )
+        default=None, foreign_key="recipes.recipe_id", primary_key=True)
     ingredient_id: Optional[int] = Field(
-        default=None, foreign_key="ingredients.ingredient_id", primary_key=True
-    )
+        default=None, foreign_key="ingredients.ingredient_id", primary_key=True)
 
     # Relationships
     recipe: Optional["Recipe"] = Relationship(back_populates="ingredients")
