@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 
 class IngredientBase(SQLModel):
     # ingredient_id: Optional[int] = Field(default=None)
-    openfood_facts_id: Optional[str] = Field(max_length=50)
+    openfoodfacts_id: Optional[str] = Field(max_length=50)
     openfoodfacts_content: Optional[dict]
     name: str = Field(max_length=100)
     category_id: Optional[int] 
@@ -15,7 +15,8 @@ class IngredientBase(SQLModel):
 
 class IngredientCreate(IngredientBase):
     """Schema for creating a new Ingredient."""
-    pass  # Inherits all fields from IngredientBase
+    updated_at: Optional[datetime] = None
+
 
 class IngredientRead(IngredientBase):
     """Schema for reading Ingredient data."""

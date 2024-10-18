@@ -9,3 +9,6 @@ pytest
 httpx
 python-dotenv
 psycopg2
+alembic
+psycopg2-binary
+pymysql

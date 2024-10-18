@@ -1,32 +1,30 @@
-# Manages database connection and session.
-
-from sqlmodel import create_engine, SQLModel, Session, select
+from sqlmodel import create_engine, SQLModel, Session
 from contextlib import contextmanager
 import os
 from dotenv import load_dotenv
 from loguru import logger
-from sqlalchemy.orm import declarative_base
-from app.models import Category, Ingredient
+from app.models import Category, Ingredient  # Import your SQLModel models
 
-load_dotenv()  # Load environment variables from .env file
+# Load environment variables from .env file
+load_dotenv()
 
+# Fetch database URL from environment variables
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+# Create the engine using the provided database URL
 engine = create_engine(
     DATABASE_URL,
-    # echo=True,
     isolation_level="READ COMMITTED"  # Set the appropriate isolation level
 )
 
-
-Base = declarative_base()
-
 def init_db():
+    """Initialize the database by creating tables."""
     logger.info(f"Initializing DB with engine: {engine}")
-    SQLModel.metadata.create_all(engine)
+    SQLModel.metadata.create_all(engine)  # This creates tables for all SQLModel models
     logger.info("DB initialized successfully")
 
+# Dependency for FastAPI to get a database session
 def get_session():
+    """Provide a transactional scope around a series of operations."""
     with Session(engine) as session:
         yield session
-

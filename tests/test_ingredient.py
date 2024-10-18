@@ -8,10 +8,11 @@ def test_create_ingredient(client: TestClient):
         "/ingredients/",
         json={
             "openfood_facts_id": "12345",
-            "openfoodfacts_content": null,
+            "openfoodfacts_content": None,
             "name": "Tomato",
             "category_id": None,
-            "created_at": datetime.now()}
+            "created_at": datetime.now().isoformat()
+            }
 
     )
     assert response.status_code == 201
