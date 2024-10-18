@@ -2,7 +2,7 @@
 # from typing import Optional, TYPE_CHECKING
 # from datetime import datetime, timezone
 # from sqlmodel import Field, SQLModel, Relationship
-# from sqlalchemy.orm import Mapped, relationship
+# 
 
 # if TYPE_CHECKING:
 #     from .user import User
@@ -20,5 +20,5 @@
 #     created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 #     # Relationships
-#     user: Mapped[Optional["User"]] = relationship(back_populates="likes")
-#     recipe: Mapped[Optional["Recipe"]] = relationship(back_populates="likes")
+#     user: Optional["User"]] = Relationship(back_populates="likes")
+#     recipe: Optional["Recipe"]] = Relationship(back_populates="likes")

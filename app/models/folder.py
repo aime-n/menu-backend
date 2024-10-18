@@ -2,7 +2,7 @@
 # from typing import Optional, List, TYPE_CHECKING
 # from datetime import datetime, timezone
 # from sqlmodel import Field, SQLModel, Relationship
-# from sqlalchemy.orm import Mapped, relationship
+# 
 
 # if TYPE_CHECKING:
 #     from .user import User
@@ -21,5 +21,5 @@
 #     updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 #     # Relationships
-#     user: Mapped[Optional["User"]] = relationship(back_populates="folders")
-#     recipes: Mapped[List["FolderRecipe"]] = relationship(back_populates="folder")
+#     user: Optional["User"]] = Relationship(back_populates="folders")
+#     recipes: List["FolderRecipe"]] = Relationship(back_populates="folder")

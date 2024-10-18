@@ -2,7 +2,7 @@
 # from typing import Optional, TYPE_CHECKING
 # from datetime import datetime, timezone
 # from sqlmodel import Field, SQLModel, Relationship
-# from sqlalchemy.orm import Mapped, relationship
+# 
 
 # if TYPE_CHECKING:
 #     from .ingredient import Ingredient
@@ -19,4 +19,4 @@
 #     updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 #     # Relationships
-#     ingredient: Mapped[Optional["Ingredient"]] = relationship(back_populates="synonyms_list")
+#     ingredient: Optional["Ingredient"]] = Relationship(back_populates="synonyms_list")

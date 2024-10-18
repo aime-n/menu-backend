@@ -2,7 +2,7 @@
 # from typing import Optional, List, TYPE_CHECKING
 # from datetime import datetime, timezone
 # from sqlmodel import Field, SQLModel, Relationship
-# from sqlalchemy.orm import Mapped, relationship
+# 
 
 # if TYPE_CHECKING:
 #     from .recipe import Recipe
@@ -22,18 +22,18 @@
 #     updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 #     # Relationships
-#     recipe: Mapped[Optional["Recipe"]] = relationship(back_populates="comments")
-#     user: Mapped[Optional["User"]] = relationship(back_populates="comments")
-#     parent_comment: Mapped[Optional[Comment]] = relationship(
+#     recipe: Optional["Recipe"]] = Relationship(back_populates="comments")
+#     user: Optional["User"]] = Relationship(back_populates="comments")
+#     parent_comment: Optional[Comment]] = relationship(
 #         sa_relationship_kwargs={"remote_side": "Comment.comment_id"},
 #         back_populates="replies"
 #     )
-#     replies: Mapped[List[Comment]] = relationship(back_populates="parent_comment")
+#     replies: List[Comment]] = Relationship(back_populates="parent_comment")
 
-#     # recipe: Optional["Recipe"] = relationship(back_populates="comments")
-#     # user: Optional["User"] = relationship(back_populates="comments")
+#     # recipe: Optional["Recipe"] = Relationship(back_populates="comments")
+#     # user: Optional["User"] = Relationship(back_populates="comments")
 #     # parent_comment: Optional[Comment] = relationship(
 #     #     sa_relationship_kwargs={"remote_side": "Comment.comment_id"},
 #     #     back_populates="replies"
 #     # )
-#     # replies: List[Comment] = relationship(back_populates="parent_comment")
+#     # replies: List[Comment] = Relationship(back_populates="parent_comment")

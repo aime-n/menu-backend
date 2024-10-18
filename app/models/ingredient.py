@@ -6,6 +6,7 @@ from sqlalchemy.dialects.postgresql import JSONB
 
 class Ingredient(SQLModel, table=True):
     __tablename__ = "ingredients"
+
     ingredient_id: Optional[int] = Field(default=None, primary_key=True)
     openfoodfacts_id: Optional[str] = None
     openfoodfacts_content: Optional[dict] = Field(default=None, sa_type=JSONB, nullable=False)
@@ -16,3 +17,4 @@ class Ingredient(SQLModel, table=True):
 
     # Relationship
     category: Optional["Category"] = Relationship(back_populates="ingredients")
+    recipe_associations: List["RecipeIngredient"] = Relationship(back_populates="ingredient")

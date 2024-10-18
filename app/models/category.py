@@ -18,4 +18,5 @@ class Category(SQLModel, table=True):
         sa_relationship_kwargs={"remote_side": "Category.category_id"}
     )
     children: List["Category"] = Relationship(back_populates="parent")
+    
     ingredients: List["Ingredient"] = Relationship(back_populates="category")

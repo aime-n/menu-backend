@@ -1,7 +1,7 @@
 # from __future__ import annotations
 # from typing import Optional, TYPE_CHECKING
 # from sqlmodel import Field, SQLModel, Relationship
-# from sqlalchemy.orm import Mapped, relationship
+# 
 
 # if TYPE_CHECKING:
 #     from .folder import Folder
@@ -17,5 +17,5 @@
 #     recipe_id: int = Field(foreign_key="recipes_db.recipes.recipe_id", primary_key=True)
 
 #     # Relationships
-#     folder: Mapped[Optional["Folder"]] = relationship(back_populates="recipes")
-#     recipe: Mapped[Optional["Recipe"]] = relationship(back_populates="folders")
+#     folder: Optional["Folder"]] = Relationship(back_populates="recipes")
+#     recipe: Optional["Recipe"]] = Relationship(back_populates="folders")

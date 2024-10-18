@@ -2,7 +2,7 @@
 # from typing import Optional, TYPE_CHECKING
 # from datetime import datetime, timezone
 # from sqlmodel import Field, SQLModel, Relationship
-# from sqlalchemy.orm import Mapped, relationship
+# 
 
 # if TYPE_CHECKING:
 #     from .user import User
@@ -18,5 +18,5 @@
 #     created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 #     # Relationships
-#     follower: Mapped[Optional["User"]] = relationship(back_populates="following", sa_relationship_kwargs={"primaryjoin": "User.user_id==Follow.follower_id"})
-#     followed: Mapped[Optional["User"]] = relationship(back_populates="followers", sa_relationship_kwargs={"primaryjoin": "User.user_id==Follow.followed_id"})
+#     follower: Optional["User"]] = Relationship(back_populates="following", sa_relationship_kwargs={"primaryjoin": "User.user_id==Follow.follower_id"})
+#     followed: Optional["User"]] = Relationship(back_populates="followers", sa_relationship_kwargs={"primaryjoin": "User.user_id==Follow.followed_id"})

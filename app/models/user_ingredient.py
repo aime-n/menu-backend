@@ -2,7 +2,7 @@
 # from typing import Optional, TYPE_CHECKING
 # from datetime import datetime, timezone
 # from sqlmodel import Field, SQLModel, Relationship
-# from sqlalchemy.orm import Mapped, relationship
+# 
 
 # if TYPE_CHECKING:
 #     from .user import User
@@ -20,5 +20,5 @@
 #     updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 #     # Relationships
-#     user: Mapped[Optional["User"]] = relationship(back_populates="ingredients")
-#     ingredient: Mapped[Optional["Ingredient"]] = relationship(back_populates="user_associations")
+#     user: Optional["User"]] = Relationship(back_populates="ingredients")
+#     ingredient: Optional["Ingredient"]] = Relationship(back_populates="user_associations")
