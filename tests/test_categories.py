@@ -7,25 +7,25 @@ import os
 from datetime import datetime
 from loguru import logger
 
-# Override the get_session dependency to use the test database
-def get_test_session():
-    with Session(engine) as session:
-        yield session
+# # Override the get_session dependency to use the test database
+# def get_test_session():
+#     with Session(engine) as session:
+#         yield session
 
-# Apply the override in the FastAPI app
-app.dependency_overrides[get_session] = get_test_session
+# # Apply the override in the FastAPI app
+# app.dependency_overrides[get_session] = get_test_session
 
-# Create the database and tables
-@pytest.fixture(scope="module", autouse=True)
-def setup_database():
-    SQLModel.metadata.create_all(engine)
-    yield
-    SQLModel.metadata.drop_all(engine)
+# # Create the database and tables
+# @pytest.fixture(scope="module", autouse=True)
+# def setup_database():
+#     SQLModel.metadata.create_all(engine)
+#     yield
+#     SQLModel.metadata.drop_all(engine)
 
-# Initialize TestClient for FastAPI
-client = TestClient(app)
+# # Initialize TestClient for FastAPI
+# client = TestClient(app)
 
-def test_create_category():
+def test_create_category(client):
     # Test creating a category
     response = client.post(
         "/categories/",
@@ -42,7 +42,7 @@ def test_create_category():
     assert data["parent_id"] is None
     assert "category_id" in data
 
-def test_get_all_categories():
+def test_get_all_categories(client):
     # Test retrieving all categories
     response = client.get("/categories/")
     assert response.status_code == 200
@@ -52,7 +52,7 @@ def test_get_all_categories():
     assert len(data) > 0
     # assert data[-1]["name"] == "Test Category"
 
-def test_get_category():
+def test_get_category(client):
     # Test retrieving a single category by ID
     response = client.post(
         "/categories/",
@@ -72,7 +72,7 @@ def test_get_category():
     assert data["name"] == "Another Category"
     assert data["category_id"] == category_id
 
-def test_update_category():
+def test_update_category(client):
     # Test updating a category
     response = client.post(
         "/categories/",
