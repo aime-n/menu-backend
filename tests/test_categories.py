@@ -72,12 +72,11 @@ def test_update_category(client):
     # Update the category
     response = client.patch(
         f"/categories/{category_id}",
-        json={"name": "Category to Update",
-              "new_name": "Updated Category", 
+        json={"name": "Updated Category", 
               "parent_id": 1}
     )
     assert response.status_code == 200
     data = response.json()
     assert data["name"] == "Updated Category"
-    assert data["name"] == "Updated Category"
+    assert data["parent_id"] == 1
     assert data["category_id"] == category_id

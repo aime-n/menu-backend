@@ -10,7 +10,6 @@ class IngredientBase(SQLModel):
     name: str = Field(max_length=100)
     standard_name: str = Field(max_length=100)
     category_id: Optional[int] = Field(default=None)
-    synonyms: Optional[List[str]] = None
     created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(timezone.utc))
 
@@ -31,4 +30,3 @@ class IngredientUpdate(SQLModel):
     name: Optional[str] = None
     standard_name: Optional[str] = None
     category_id: Optional[int] = None
-    synonyms: Optional[list[str]] = None

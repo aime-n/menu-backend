@@ -14,7 +14,8 @@ class CategoryCreate(CategoryBase):
 
 # Schema for updating a category
 class CategoryUpdate(CategoryBase):
-    new_name: Optional[str]
+    name: Optional[str] = None
+    parent_id: Optional[int] = None
 
 # Schema for reading a category
 class CategoryRead(CategoryBase):

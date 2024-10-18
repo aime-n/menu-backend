@@ -34,7 +34,13 @@ def update_category(session: Session, category_id: int, category_data: CategoryU
     category = session.get(Category, category_id)
     if not category:
         return None
-    category.name = category_data.new_name
+    # category.name = category_data.new_name
+    if not category:
+        return None
+    # Update the fields that have been provided
+    ingredient_data_dict = category_data.dict(exclude_unset=True)
+    for key, value in ingredient_data_dict.items():
+        setattr(category, key, value)
     session.add(category)
     session.commit()
     session.refresh(category)

@@ -1,39 +1,29 @@
-# # tests/test_ingredient.py
-
 # import pytest
-# from httpx import AsyncClient
-# from sqlmodel import Session
-# from loguru import logger  # Import loguru for logging
+# from fastapi.testclient import TestClient
+# from sqlmodel import Session, create_engine, SQLModel
 # from app.main import app
-# from app.database import get_session, init_db, engine
-# # from app.models.ingredient import Ingredient
-# # from app.schemas.ingredient import IngredientCreate
+# from app.database import get_session, engine
+# import os
+# from datetime import datetime
+# from loguru import logger
 
-# # Use a test database (e.g., SQLite in-memory)
-# DATABASE_URL = "sqlite:///./test.db"
-
-# logger.add("test_log.log", rotation="500 MB")  # Log to a file with rotation
-
-# logger.info("Initializing test...")
-
-# @pytest.fixture(scope="module")
-# def test_db():
-#     logger.info("Setting up the test database.")
-#     init_db()
+# # Override the get_session dependency to use the test database
+# def get_test_session():
 #     with Session(engine) as session:
 #         yield session
-#     logger.info("Tearing down the test database.")
 
-# @pytest.fixture(scope="module")
-# def client():
-#     logger.info("Setting up the test client.")
-#     app.dependency_overrides[get_session] = lambda: test_db()
-    
-#     with AsyncClient(app=app, base_url="http://test") as ac:
-#         yield ac
-    
-#     logger.info("Tearing down the test client.")
-#     app.dependency_overrides.clear()
+# # Apply the override in the FastAPI app
+# app.dependency_overrides[get_session] = get_test_session
+
+# # Create the database and tables
+# @pytest.fixture(scope="module", autouse=True)
+# def setup_database():
+#     SQLModel.metadata.create_all(engine)
+#     yield
+#     SQLModel.metadata.drop_all(engine)
+
+# # Initialize TestClient for FastAPI
+# client = TestClient(app)
 
 # # @pytest.mark.asyncio
 # # async def test_create_ingredient(client: AsyncClient):
