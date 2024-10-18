@@ -24,6 +24,4 @@ class Recipe(SQLModel, table=True):
     user: Optional["User"] = Relationship(back_populates="recipes")
     comments: List["Comment"] = Relationship(back_populates="recipe")
     likes: List["Like"] = Relationship(back_populates="recipe")
-
-
-    # folders: List["FolderRecipe"] = Relationship(back_populates="recipe")
+    folders: List["FolderRecipe"] = Relationship(back_populates="recipe")

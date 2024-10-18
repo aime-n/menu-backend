@@ -13,9 +13,8 @@ class UserPreference(SQLModel, table=True):
     user_id: int = Field(foreign_key="users.user_id")
     preference_type: str = Field(max_length=50)
     value: str = Field(max_length=100)
-    created_at: datetime = Field(default_factory=datetime.now)#     updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: Optional[datetime] = Field(default_factory=datetime.now)
 
     # Relationships
     user: Optional["User"] = Relationship(back_populates="preferences")
-
-    # user: Optional["User"] = Relationship(back_populates="preferences")

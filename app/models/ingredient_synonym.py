@@ -13,7 +13,7 @@ class IngredientSynonym(SQLModel, table=True):
     ingredient_id: int = Field(foreign_key="ingredients.ingredient_id")
     synonym: str = Field(max_length=100)
     created_at: datetime = Field(default_factory=datetime.now)
-    updated_at: datetime = Field(default_factory=datetime.now)
+    updated_at: Optional[datetime] = Field(default_factory=datetime.now)
 
     # Relationships
     ingredient: Optional["Ingredient"] = Relationship(back_populates="synonyms_list")
