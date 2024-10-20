@@ -14,14 +14,8 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 # Create the engine using the provided database URL
 engine = create_engine(
     DATABASE_URL,
-    isolation_level="READ COMMITTED"  # Set the appropriate isolation level
+    # isolation_level="READ COMMITTED"  # Set the appropriate isolation level
 )
-
-def init_db():
-    """Initialize the database by creating tables."""
-    logger.info(f"Initializing DB with engine: {engine}")
-    SQLModel.metadata.create_all(engine)  # This creates tables for all SQLModel models
-    logger.info("DB initialized successfully")
 
 # Dependency for FastAPI to get a database session
 def get_session():

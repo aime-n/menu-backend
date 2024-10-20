@@ -6,6 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 import os
 from sqlmodel import SQLModel
+from dotenv import load_dotenv
 
 import sqlmodel
 
@@ -19,7 +20,11 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-config.get_main_option("sqlalchemy.url", os.getenv("DATABASE_URL"))
+# config.get_main_option("sqlalchemy.url", os.getenv("DATABASE_URL"))
+load_dotenv()  # Load environment variables from .env
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+config.set_main_option("sqlalchemy.url", DATABASE_URL)
 
 # add your model's MetaData object here
 # for 'autogenerate' support

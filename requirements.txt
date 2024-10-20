@@ -12,3 +12,7 @@ psycopg2
 alembic
 psycopg2-binary
 pymysql
+passlib[bcrypt]
+python-jose[cryptography]
+pytest-cov
+pydantic[email]
