@@ -9,8 +9,7 @@ class CategoryBase(SQLModel):
 
 # Schema for creating a category
 class CategoryCreate(CategoryBase):
-    created_at: datetime
-    updated_at: Optional[datetime] = None
+    pass
 
 # Schema for updating a category
 class CategoryUpdate(CategoryBase):

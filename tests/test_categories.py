@@ -1,10 +1,3 @@
-import pytest
-from fastapi.testclient import TestClient
-from sqlmodel import Session, create_engine, SQLModel
-from app.main import app
-from app.database import get_session, engine
-import os
-from datetime import datetime
 from loguru import logger
 
 def test_create_category(client):
@@ -14,8 +7,6 @@ def test_create_category(client):
         json={
             "name": "Test Category",
             "parent_id": None,
-            "created_at": datetime.now().isoformat(),
-            "updated_at": None
             }
     )
     assert response.status_code == 200
@@ -41,8 +32,6 @@ def test_get_category(client):
         json={
             "name": "Another Category",
             "parent_id": None,
-            "created_at": datetime.now().isoformat(),
-            "updated_at": None
             }
     )
     assert response.status_code == 200
@@ -61,8 +50,6 @@ def test_update_category(client):
         json={
             "name": "Category to Update",
             "parent_id": None,
-            "created_at": datetime.now().isoformat(),
-            "updated_at": None
             }
     )
 

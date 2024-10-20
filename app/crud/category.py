@@ -8,7 +8,11 @@ from datetime import datetime
 
 def create_category(session: Session, category_data: CategoryCreate) -> CategoryBase:
     """Create a new category."""
-    category = Category(**category_data.model_dump())
+    category = Category(
+        **category_data.model_dump(),
+        created_at=datetime.now(),
+        updated_at=datetime.now()
+        )
     session.add(category)
     session.commit()
     session.refresh(category)
@@ -41,6 +45,7 @@ def update_category(session: Session, category_id: int, category_data: CategoryU
     ingredient_data_dict = category_data.model_dump(exclude_unset=True)
     for key, value in ingredient_data_dict.items():
         setattr(category, key, value)
+    ingredient_data_dict["updated_at"] = datetime.now()
     session.add(category)
     session.commit()
     session.refresh(category)

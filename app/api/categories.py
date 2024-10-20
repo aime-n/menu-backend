@@ -15,7 +15,6 @@ def get_all_categories(session: Session = Depends(get_session)):
     """
     return read_categories(session)
 
-
 @router.post("/", response_model=CategoryRead)
 def create_new_category(category: CategoryCreate, session: Session = Depends(get_session)):
     """Create a new category."""
